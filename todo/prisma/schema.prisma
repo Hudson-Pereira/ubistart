@@ -18,3 +18,21 @@ model Test {
 
   @@map("test")
 }
+
+enum Role {
+  USER
+  ADMIN
+
+  @@map("role")
+}
+
+model User {
+  id        Int      @id @unique @default(autoincrement())
+  email     String
+  senha     String
+  role      Role     @default(USER)
+  // todo          Todo[]
+  createdAt DateTime @default(now())
+
+  @@map("user")
+}

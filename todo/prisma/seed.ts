@@ -11,6 +11,16 @@ async function main(){
             value: 1
         }
     })
+
+    const userUser = await prisma.user.upsert({
+        where: {id: 1},
+        update: {},
+        create:{
+            email: "teste@seed.com",
+            senha: "segredo",
+            role: "ADMIN"   
+        }
+    })
 }
 main().catch((e) => {
     process.exit(1)
