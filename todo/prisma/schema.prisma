@@ -31,8 +31,21 @@ model User {
   email     String
   senha     String
   role      Role     @default(USER)
-  // todo          Todo[]
+  todo      Todo[]
   createdAt DateTime @default(now())
 
   @@map("user")
+}
+
+model Todo {
+  id          Int      @id @unique @default(autoincrement())
+  description String
+  deadline    Int
+  concluted   Int      @default(0)
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("todo")
 }
