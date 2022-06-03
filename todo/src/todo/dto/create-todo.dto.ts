@@ -13,4 +13,7 @@ export class CreateTodoDto {
     @IsNotEmpty()
     concluted: number;
 
+    @IsInt()
+    userId: number;
+
 }

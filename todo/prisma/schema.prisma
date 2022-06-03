@@ -28,7 +28,7 @@ enum Role {
 
 model User {
   id        Int      @id @unique @default(autoincrement())
-  email     String
+  email     String   @unique
   senha     String
   role      Role     @default(USER)
   todo      Todo[]

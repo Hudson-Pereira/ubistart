@@ -1,7 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+
+function error() {
+  throw new HttpException("Verifique os dados e tente novamente.", HttpStatus.BAD_REQUEST)
+}
+
+function empty(user){
+  if(user.length === 0){
+    throw new HttpException("Nada encontrado.",HttpStatus.NOT_FOUND);
+  }
+}
 
 @Injectable()
 export class UserService {
@@ -9,26 +18,23 @@ constructor(private prisma: PrismaService){}
 
   async create(data: Prisma.UserCreateInput) {
     try{
-      const user = await this.prisma.user.create({data})
+      const user = await this.prisma.user.create({data});
+      return user;
     }catch(e){
-      console.error(e.message)
-      
+      console.error(e.message);
+      error();
     };
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    try{
+      const user = await this.prisma.user.findMany();
+      empty(user)
+      return user; 
+    }catch(e){
+      console.error(e.message);
+      error();
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
 }

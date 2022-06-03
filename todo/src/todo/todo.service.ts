@@ -1,16 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTodoDto } from './dto/create-todo.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
+function error() {
+  throw new HttpException("Verifique os dados e tente novamente.", HttpStatus.BAD_REQUEST)
+}
+
+function empty(todo){
+  if(todo.length === 0){
+    throw new HttpException("Nada encontrado.",HttpStatus.NOT_FOUND);
+  }
+}
 @Injectable()
 export class TodoService {
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  constructor(private prisma: PrismaService){}
+
+  async create(data: Prisma.TodoCreateInput) {
+    try {
+      const todo = await this.prisma.todo.create({data});
+      return todo;
+    }catch(e){
+      console.error(e.message);
+      error();
+    }
   }
 
-  findAll() {
-    return `This action returns all todo`;
+  async findAll() {
+  try{
+    const todo = await this.prisma.todo.findMany();
+    if (todo.length > 0)
+    empty(todo);
+    return todo;
+  } catch(e){
+    console.error(e.message)
+    error()
   }
+}
 
   findOne(id: number) {
     return `This action returns a #${id} todo`;
