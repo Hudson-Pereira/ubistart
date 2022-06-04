@@ -14,7 +14,6 @@ import { UserService } from "src/user/user.service";
     UserModule,
     PassportModule.register({
       defaultStrategy: "jwt",
-      property: "user",
       session: false,
     }),
     JwtModule.register({

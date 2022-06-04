@@ -16,9 +16,9 @@ async function main(){
         where: {id: 1},
         update: {},
         create:{
-            email: "teste@seed.com",
+            email: "admin@seed.com",
             senha: "$2b$10$F3aIBwFskwcls6kcaleZl.WtdU3lhaHRCejDf0hb7DWXvRDQo/LyW",
-            role: "ADMIN"   
+            role: true   
         }
     })
 

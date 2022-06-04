@@ -5,7 +5,7 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 export interface JwtPayload {
   id: number;
   email: string;
-  role: string;
+  role: boolean;
   senha:string;
 }
 

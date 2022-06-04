@@ -30,7 +30,7 @@ model User {
   id        Int      @id @unique @default(autoincrement())
   email     String   @unique
   senha     String
-  role      Role     @default(USER)
+  role      Boolean  @default(false)
   todo      Todo[]
   createdAt DateTime @default(now())
 
