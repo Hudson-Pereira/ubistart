@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 function error() {
@@ -24,6 +24,10 @@ constructor(private prisma: PrismaService){}
       console.error(e.message);
       error();
     };
+  }
+
+  async getByEmail(email: string){
+    return await this.prisma.user.findUnique({where:{email}})
   }
 
   async findAll() {

@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, UseGuards} from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('todo')
 export class TodoController {
@@ -12,6 +13,7 @@ export class TodoController {
     return this.todoService.create(createTodoDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.todoService.findAll();
