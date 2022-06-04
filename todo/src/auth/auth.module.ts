@@ -1,19 +1,37 @@
-import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { UserModule } from 'src/user/user.module';
-import { LocalStrategy } from './models/local.strategy';
-import { JwtStrategy } from './models/jwt.strategy';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './models/constants';
+import { RolesGuard } from "./guards/roles.guard";
+import { Module } from "@nestjs/common";
+import { AuthService } from "./auth.service";
+import { AuthController } from "./auth.controller";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { JwtStrategy } from "./models/jwt.strategy";
+import { PrismaService } from "src/prisma/prisma.service";
+import { UserModule } from "src/user/user.module";
+import { UserService } from "src/user/user.service";
 
 @Module({
-  imports: [UserModule, PassportModule, JwtModule.register({
-    secret: jwtConstants.secret,
-    signOptions: { expiresIn: '5m'}
-  })],
+  imports: [
+    UserModule,
+    PassportModule.register({
+      defaultStrategy: "jwt",
+      property: "user",
+      session: false,
+    }),
+    JwtModule.register({
+      secret: process.env.SECRETKEY,
+      signOptions: {
+        expiresIn: process.env.EXPIRESIN,
+      },
+    }),
+  ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy,]
+  providers: [
+    AuthService,
+    JwtStrategy,
+    UserService,
+    PrismaService,
+    RolesGuard,
+  ],
+  exports: [PassportModule, JwtModule],
 })
 export class AuthModule {}

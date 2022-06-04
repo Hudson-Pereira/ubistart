@@ -17,7 +17,7 @@ async function main(){
         update: {},
         create:{
             email: "teste@seed.com",
-            senha: "segredo",
+            senha: "$2b$10$F3aIBwFskwcls6kcaleZl.WtdU3lhaHRCejDf0hb7DWXvRDQo/LyW",
             role: "ADMIN"   
         }
     })

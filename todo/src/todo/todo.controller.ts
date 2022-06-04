@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, UseGuards} from '@nestjs/com
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Roles } from 'src/auth/decorators/roles.decorador';
+import { Role } from 'src/auth/models/role.enum';
 
 @Controller('todo')
 export class TodoController {
@@ -13,7 +15,6 @@ export class TodoController {
     return this.todoService.create(createTodoDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.todoService.findAll();
