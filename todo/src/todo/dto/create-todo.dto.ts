@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty, IsString } from "class-validator";
+import {IsInt, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateTodoDto {
     @IsString()
@@ -7,10 +7,17 @@ export class CreateTodoDto {
 
     @IsInt()
     @IsNotEmpty()
-    deadline: number;
+    dayDeadline: number;
 
     @IsInt()
     @IsNotEmpty()
+    monthDeadline: number;
+
+    @IsInt()
+    @IsNotEmpty()
+    yearDeadline: number;
+
+    @IsInt()
     concluted: number;
 
     @IsInt()

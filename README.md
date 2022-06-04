@@ -12,5 +12,8 @@ email validando formato
 validacao de retorno vazio
 decorators nas rotas post
 validacao erro de requisicao
+deadline separado
+ECSMA5 nao aceita 0 a esquerda
 
-TODO: iniciar criação dos endpoints da rota todo
+TODO: terminar criação dos endpoints da rota todo
+TODO: travar userId para edição e criação, automático

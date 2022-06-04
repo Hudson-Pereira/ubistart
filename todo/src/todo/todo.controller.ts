@@ -1,14 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param} from '@nestjs/common';
 import { TodoService } from './todo.service';
+import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Prisma } from '@prisma/client';
 
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   @Post()
-  create(@Body() createTodoDto: Prisma.TodoCreateInput) {
+  create(@Body() createTodoDto: CreateTodoDto) {
     return this.todoService.create(createTodoDto);
   }
 
@@ -27,8 +27,4 @@ export class TodoController {
     return this.todoService.update(+id, updateTodoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.todoService.remove(+id);
-  }
 }

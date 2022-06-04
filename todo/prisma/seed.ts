@@ -27,7 +27,9 @@ async function main(){
         update: {},
         create:{
             description: "Criar novos usuários comuns.",
-            deadline: 30062022,
+            dayDeadline: 3,
+            monthDeadline: 6,
+            yearDeadline: 2022,
             userId: 1
         }
     })
