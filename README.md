@@ -16,9 +16,7 @@ deadline separado
 ECSMA5 nao aceita 0 a esquerda
 rota de autenticacao 'auth'
 senha admin: "$2b$10$F3aIBwFskwcls6kcaleZl.WtdU3lhaHRCejDf0hb7DWXvRDQo/LyW"
-endpoint create user apenas para admin
 dois tipos de user, admin ja no seed
-endpoint findAll aberta para pesquisar email do admin
 para criar user admin, deve-se especificar no campo role, para usuario comum, pode deixar em branco que adiciona automatico
 
 TODO: terminar criação dos endpoints da rota todo

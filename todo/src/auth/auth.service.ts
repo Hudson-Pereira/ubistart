@@ -29,7 +29,7 @@ export class AuthService {
     const user: JwtPayload = { id, email, role, senha };
     const acessToken = this.jwtService.sign(user);
     return {
-      expiresIn: '5m',
+      expiresIn: process.env.EXPIRESIN,
       acessToken,
     };
   }
