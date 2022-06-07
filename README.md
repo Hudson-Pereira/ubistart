@@ -2,6 +2,8 @@ API criada por Hudson Oliveira Pereira, desenvolvedor JavaScript em desenvolvime
 
 Link trello com demais informações sobre organização e planejamento: https://trello.com/b/FN7bBROj/testes
 
+Dados para .env em .env.example
+
 Ferramentas utilizadas:
     - Typescript
     - Nestjs
