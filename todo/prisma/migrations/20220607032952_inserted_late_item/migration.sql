@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "todo" ADD COLUMN     "late" INTEGER NOT NULL DEFAULT 0;

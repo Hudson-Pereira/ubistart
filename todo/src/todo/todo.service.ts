@@ -59,7 +59,7 @@ export class TodoService {
     if(user.role === true){
     const todo = await this.prisma.todo.findMany({
       skip: 0,
-      take: 3,
+      take: 10,
     });  
     empty(todo)
     return todo;  
