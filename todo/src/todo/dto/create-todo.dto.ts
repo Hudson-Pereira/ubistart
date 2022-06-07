@@ -20,6 +20,9 @@ export class CreateTodoDto {
     @Max(1)
     concluted: number;
 
+    @Max(1)
+    late: number;
+
     @IsNotEmpty()
     @IsInt()
     userId: number;

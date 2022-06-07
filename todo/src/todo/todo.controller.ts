@@ -6,6 +6,8 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { UserDecorator } from 'src/auth/decorators/user.decorator';
 import { User } from 'src/user/entities/user.entity';
+import { Role } from 'src/auth/models/role.enum';
+import { Roles } from 'src/auth/decorators/roles.decorador';
 
 @Controller('todo')
 export class TodoController {
@@ -27,6 +29,13 @@ export class TodoController {
   @Get('/id/:id')
   findOne(@Param('id') id: string, @UserDecorator() user: User) {
     return this.todoService.findOne(+id, user);
+  }
+
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(Role.Admin)
+  @Get('/late')
+  findLate() {
+    return this.todoService.findLate();
   }
 
   @UseGuards(AuthGuard('jwt'), RolesGuard)

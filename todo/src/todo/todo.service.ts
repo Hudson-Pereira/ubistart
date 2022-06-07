@@ -97,6 +97,16 @@ export class TodoService {
     };
   }
 
+  async findLate() {
+    try {
+      const todo = await this.prisma.todo.findMany({where: {late: 1}});
+      empty(todo);
+      return todo;
+    }catch(e){
+      error(e)
+    };
+  }
+
     async update(id: number, data: UpdateTodoDto, user: User) {
     try{
       const todoVerify = await this.prisma.todo.findUnique({where: {id}});
