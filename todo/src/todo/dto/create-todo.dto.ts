@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty, IsString } from "class-validator";
+import {IsInt, IsNotEmpty, IsString, Max } from "class-validator";
 
 export class CreateTodoDto {
     @IsString()
@@ -17,9 +17,10 @@ export class CreateTodoDto {
     @IsNotEmpty()
     yearDeadline: number;
 
-    @IsInt()
+    @Max(1)
     concluted: number;
 
+    @IsNotEmpty()
     @IsInt()
     userId: number;
 

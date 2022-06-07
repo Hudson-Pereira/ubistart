@@ -24,15 +24,15 @@ export class TodoController {
   }
 
   @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.todoService.findOne(+id);
+  @Get('/id/:id')
+  findOne(@Param('id') id: string, @UserDecorator() user: User) {
+    return this.todoService.findOne(+id, user);
   }
 
   @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todoService.update(+id, updateTodoDto);
+  @Patch('/id/:id')
+  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto, @UserDecorator() user: User) {
+    return this.todoService.update(+id, updateTodoDto, user);
   }
 
 }

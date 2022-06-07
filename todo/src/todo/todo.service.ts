@@ -23,12 +23,12 @@ function notFound(todo){
 
 function conclutedVerify(todo){
   if(todo.concluted > 0){ 
-    throw new HttpException("Item concluído não pode ser alterado.", HttpStatus.BAD_REQUEST)}
+    throw new HttpException("Item concluído.", HttpStatus.BAD_REQUEST)}
 }
 
 function verifyDeadline(todo){
   const date = new Date()
-  if(todo.concluted !== 0){
+  if(todo.concluted == 0){
     if(todo.yearDeadline <= date.getFullYear()){
       if(todo.monthDeadline <= date.getMonth()+1){
         if(todo.dayDeadline < date.getDate()){
@@ -39,6 +39,7 @@ function verifyDeadline(todo){
   }
   return `Tarefa vencendo em ${todo.dayDeadline}/${todo.monthDeadline}/${todo.yearDeadline}`
 }
+
 
 @Injectable()
 export class TodoService {
@@ -56,15 +57,22 @@ export class TodoService {
   async findAll(user: User) {
   try{
     if(user.role === true){
-    const todo = await this.prisma.todo.findMany();  
+    const todo = await this.prisma.todo.findMany({
+      skip: 0,
+      take: 5,
+    });  
     empty(todo)
     return todo;  
   }
     const todo = await this.prisma.todo.findMany({
       where: {
         userId: user.id
-      }
-    });
+      },
+        skip: 0,
+        take: 5,
+
+      });
+
     empty(todo);
     return todo;
   } catch(e){
@@ -72,25 +80,34 @@ export class TodoService {
   }
 }
 
-  async findOne(id: number) {
+  async findOne(id: number, user: User) {
     try {
       const todo = await this.prisma.todo.findUnique({where: {id}});
+      if(user.id === todo.userId){
       notFound(todo);
-      // verifyUser(todo);
-      return [verifyDeadline(todo), todo];
+        let concluted = verifyDeadline(todo);
+        if(todo.concluted > 0){
+          concluted = "Item concluído.";
+        }
+      return [`Situation: ${concluted}.`, `Criado por: ${user.email}.`, `Description: ${todo.description}`];
+      }
+      return "Este item pertence a outro usuário."
     }catch(e){
       error(e)
     };
   }
 
-  async update(id: number, data: UpdateTodoDto) {
+    async update(id: number, data: UpdateTodoDto, user: User) {
     try{
       const todoVerify = await this.prisma.todo.findUnique({where: {id}});
+      if(user.id === todoVerify.userId){
       notFound(todoVerify)
       conclutedVerify(todoVerify)
       const todo = await this.prisma.todo.update({ data, where: {id}});
 
       return todo;
+      }
+      return "Este item pertence a outro usuário."
     }catch(e){
       error(e)
     }
