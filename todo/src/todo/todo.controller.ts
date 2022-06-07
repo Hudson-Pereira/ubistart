@@ -20,8 +20,7 @@ export class TodoController {
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get()
   findAll(@UserDecorator() user: User){
-    console.log(user)
-    return this.todoService.findAll();
+    return this.todoService.findAll(user);
   }
 
   @UseGuards(AuthGuard('jwt'), RolesGuard)

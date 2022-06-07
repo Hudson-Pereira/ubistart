@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { User } from 'src/user/entities/user.entity';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
 function error(e) {
@@ -39,9 +40,6 @@ function verifyDeadline(todo){
   return `Tarefa vencendo em ${todo.dayDeadline}/${todo.monthDeadline}/${todo.yearDeadline}`
 }
 
-// function verifyUser(todo){
-//   if(todo.userId !==)
-// TODO: fazer depois da autenticação, tambem para busca ALL}
 @Injectable()
 export class TodoService {
   constructor(private prisma: PrismaService){}
@@ -55,9 +53,18 @@ export class TodoService {
     }
   }
 
-  async findAll() {
+  async findAll(user: User) {
   try{
-    const todo = await this.prisma.todo.findMany();
+    if(user.role === true){
+    const todo = await this.prisma.todo.findMany();  
+    empty(todo)
+    return todo;  
+  }
+    const todo = await this.prisma.todo.findMany({
+      where: {
+        userId: user.id
+      }
+    });
     empty(todo);
     return todo;
   } catch(e){
