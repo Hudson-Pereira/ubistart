@@ -44,7 +44,7 @@ Os campos de dealine(day, month, year), quando números menores que 10, deverão
 
 dados do user ADMIN: 
     email: admin@seed.com
-    senha: "$2b$10$F3aIBwFskwcls6kcaleZl.WtdU3lhaHRCejDf0hb7DWXvRDQo/LyW"
+    senha: "segredo"
 
 Existem dois tipos de usuários desta API, COMUM e ADMIN, sendo o último inserido via seed.
 
